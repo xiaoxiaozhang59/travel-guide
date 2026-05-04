@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>朋友和假期是人生顶好的两样东西 | 2026初夏自驾游攻略</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+:root {
+  --warm-cream: #fdf6ed;
+  --peach: #e8c4a2;
+  --peach-deep: #c4875a;
+  --forest: #3d5a40;
+  --forest-light: #5c7a60;
+  --ink: #2c2416;
+  --ink-mid: #5c4e3a;
+  --ink-light: #8a7b66;
+  --sand: #f5efe4;
+  --sand-dark: #e6ddd0;
+  --card-bg: #ffffff;
+  --accent: #c4875a;
+  --accent-light: #f5e1d0;
+  --shadow-sm: 0 1px 3px rgba(60,40,20,0.06);
+  --shadow-md: 0 4px 24px rgba(60,40,20,0.08);
+  --shadow-lg: 0 12px 40px rgba(60,40,20,0.12);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--warm-cream);
+  color: var(--ink);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Hero ─────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(170deg, #e8a87c 0%, #d4956a 25%, #e8c4a2 50%, #c9a88c 75%, #3d5a40 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><radialGradient id="g1"><stop offset="0%" stop-color="%23ffffff10"/><stop offset="100%" stop-color="%23ffffff00"/></radialGradient></defs><circle cx="200" cy="150" r="350" fill="url(%23g1)"/><circle cx="1000" cy="550" r="450" fill="url(%23g1)"/><circle cx="600" cy="350" r="250" fill="url(%23g1)"/><path d="M0 450 Q300 380 600 480 T1200 420 L1200 800 L0 800Z" fill="%23ffffff06"/><path d="M0 550 Q400 500 800 580 T1200 530 L1200 800 L0 800Z" fill="%23ffffff08"/></svg>') center/cover no-repeat;
+  opacity: 0.5;
+}
+.hero-content { position: relative; text-align: center; padding: 3rem 2rem; max-width: 800px; z-index: 1; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.45rem 1.4rem;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.4;
+  text-shadow: 0 2px 30px rgba(60,30,10,0.25);
+  margin-bottom: 1.2rem;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(120deg, #fff8e7, #ffd89b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.88);
+  font-weight: 300;
+  line-height: 1.9;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+.hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.hero-tags span {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.35rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.92);
+  font-weight: 400;
+}
+.hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; opacity: 0.5; }
+.hero-scroll svg { width: 24px; height: 24px; stroke: #fff; }
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ─── Constraints Bar ──────────────────── */
+.constraints {
+  background: #fff; border-bottom: 1px solid var(--sand-dark);
+  padding: 1rem 2rem; position: sticky; top: 0; z-index: 100;
+  display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+.constraint-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--ink-mid); font-weight: 500; }
+.constraint-item .icon { font-size: 1rem; }
+
+/* ─── Section ──────────────────────────── */
+.section { max-width: 1200px; margin: 0 auto; padding: 4.5rem 2rem; }
+.section-alt { background: #fff; }
+.section-header { text-align: center; margin-bottom: 3rem; }
+.section-label {
+  display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--forest); background: rgba(61,90,64,0.08); padding: 0.35rem 1.1rem; border-radius: 50px; margin-bottom: 0.8rem;
+}
+.section-header h2 {
+  font-family: 'Noto Serif SC', serif; font-size: 2rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem;
+}
+.section-header .price {
+  font-size: 2.6rem; font-weight: 900; color: var(--accent); font-family: 'Noto Serif SC', serif;
+}
+.section-header p { color: var(--ink-light); font-size: 0.95rem; max-width: 500px; margin: 0.4rem auto 0; }
+
+/* ─── Cards Grid ───────────────────────── */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+.card {
+  background: var(--card-bg); border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative;
+  border: 1px solid var(--sand-dark);
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.card-img { height: 200px; background-size: cover; background-position: center; position: relative; transition: transform 0.5s ease; }
+.card:hover .card-img { transform: scale(1.03); }
+.card-img::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+  background: linear-gradient(to top, rgba(30,15,5,0.55), transparent);
+}
+.card-badge { position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); color: #fff; padding: 0.25rem 0.85rem; border-radius: 50px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; z-index: 2; }
+.card-rank { position: absolute; top: 1rem; right: 1rem; background: var(--accent); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; z-index: 2; box-shadow: 0 2px 10px rgba(196,135,90,0.4); }
+.card-body { padding: 1.5rem; }
+.card-body h3 { font-family: 'Noto Serif SC', serif; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--ink); }
+.card-body .subtitle { font-size: 0.83rem; color: var(--forest-light); font-weight: 500; margin-bottom: 1rem; }
+.card-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.meta-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--ink-mid); }
+.meta-item .dot { width: 6px; height: 6px; border-radius: 50%; }
+.dot-green { background: #6abf69; }
+.dot-blue { background: #64b5f6; }
+.dot-orange { background: #ffb74d; }
+.dot-red { background: #ef5350; }
+.card-cost { background: var(--warm-cream); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; margin-bottom: 1rem; }
+.card-cost .total { font-size: 1.2rem; font-weight: 700; color: var(--ink); line-height: 1.5; }
+.card-cost .total span { font-size: 0.78rem; font-weight: 400; color: var(--ink-light); }
+.card-cost .detail-line { font-size: 0.75rem; color: var(--ink-light); margin-top: 0.35rem; line-height: 1.5; }
+.card-detail { max-height: 0; overflow: hidden; transition: max-height 0.6s ease; }
+.card.expanded .card-detail { max-height: 3000px; }
+.card.expanded .card-expand svg { transform: rotate(180deg); }
+.card-expand { display: flex; align-items: center; gap: 0.3rem; font-size: 0.83rem; color: var(--forest); font-weight: 500; padding-top: 0.6rem; border-top: 1px solid var(--sand-dark); margin-top: 0.5rem; user-select: none; }
+.card-expand svg { width: 14px; height: 14px; transition: transform 0.3s ease; }
+.card-detail-inner { padding-top: 1rem; color: var(--ink); }
+.day-item { display: flex; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.65; color: var(--ink); }
+.day-num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--forest); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.78rem; }
+.xhs-ref { font-size: 0.74rem; color: var(--ink-light); margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px dashed var(--sand-dark); }
+
+.card-map { width: 100%; min-height: 280px; height: 280px; border-radius: var(--radius-sm); margin-top: 1rem; border: 1px solid var(--sand-dark); z-index: 1; background: var(--sand); }
+
+/* ─── Safety Section ───────────────────── */
+.safety { background: linear-gradient(180deg, var(--forest) 0%, #2d4a33 100%); color: #fff; padding: 5rem 2rem; }
+.safety-inner { max-width: 1000px; margin: 0 auto; }
+.safety h2 { font-family: 'Noto Serif SC', serif; font-size: 2rem; text-align: center; margin-bottom: 2.5rem; color: #fff; }
+.safety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.safety-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); padding: 1.5rem; backdrop-filter: blur(4px); }
+.safety-card .s-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+.safety-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; color: #fff; }
+.safety-card p { font-size: 0.83rem; opacity: 0.78; line-height: 1.6; color: rgba(255,255,255,0.85); }
+
+/* ─── Comparison Table ─────────────────── */
+.compare { background: #fff; padding: 4.5rem 2rem; }
+.compare-inner { max-width: 1000px; margin: 0 auto; overflow-x: auto; }
+.compare h2 { font-family: 'Noto Serif SC', serif; font-size: 2rem; text-align: center; margin-bottom: 2.5rem; color: var(--ink); }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; color: var(--ink); }
+.compare-table th { background: var(--forest); color: #fff; padding: 0.9rem 1rem; font-weight: 600; font-size: 0.82rem; text-align: left; }
+.compare-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.compare-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+.compare-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--sand-dark); color: var(--ink); }
+.compare-table tr:hover td { background: var(--warm-cream); }
+.tier-badge { display: inline-block; padding: 0.18rem 0.65rem; border-radius: 50px; font-size: 0.72rem; font-weight: 700; }
+.tier-low { background: #e8f0e6; color: var(--forest); }
+.tier-mid { background: #fdf0e4; color: var(--accent); }
+.tier-high { background: #fce8e4; color: #c04a3a; }
+.star { color: #c9a96e; }
+
+/* ─── Footer ───────────────────────────── */
+.footer { background: var(--ink); color: rgba(255,255,255,0.45); text-align: center; padding: 2rem; font-size: 0.78rem; }
+.footer a { color: var(--peach); text-decoration: none; }
+
+/* ─── Animations ───────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.card { animation: fadeUp 0.6s ease backwards; }
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+
+/* ─── Responsive ───────────────────────── */
+@media (max-width: 768px) {
+  .hero { min-height: 50vh; }
+  .hero h1 { font-size: 1.7rem; }
+  .section { padding: 2.5rem 1rem; }
+  .cards { grid-template-columns: 1fr; }
+  .constraints { gap: 0.8rem; padding: 0.8rem 1rem; }
+  .constraint-item { font-size: 0.72rem; }
+}
+@media (max-width: 480px) {
+  .card-body h3 { font-size: 1.15rem; }
+  .section-header h2 { font-size: 1.5rem; }
+  .card-cost .total { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">2026 初夏 · 新手友好 · 三四天自驾</div>
+    <h1>朋友和假期是人生<em>顶好的两样东西</em></h1>
+    <p>两人同行 · 一人驾驶 · 三四天自驾 · 自然风光<br>6月15日—7月15日 · 新手友好路段</p>
+    <div class="hero-tags">
+      <span>🚗 每日驾驶≤4h</span>
+      <span>🛣️ 新手友好路段</span>
+      <span>🌿 自然风光</span>
+      <span>☀️ 避开雨季</span>
+      <span>🚄 高铁/飞机+租车</span>
+      <span>📍 合肥&杭州出发</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+  </div>
+</header>
+
+<!-- ═══════════════ CONSTRAINTS ═══════════════ -->
+<div class="constraints">
+  <div class="constraint-item"><span class="icon">👤</span> 一人驾驶（新手）</div>
+  <div class="constraint-item"><span class="icon">⏱️</span> 每日驾驶 ≤ 4h</div>
+  <div class="constraint-item"><span class="icon">🛣️</span> 不走山路/险路</div>
+  <div class="constraint-item"><span class="icon">☀️</span> 仅白天行车</div>
+  <div class="constraint-item"><span class="icon">🚄</span> 合肥 & 杭州出发</div>
+  <div class="constraint-item"><span class="icon">📅</span> 6.15 — 7.15</div>
+</div>
+
+<!-- ═══════════════ 3000元档 ═══════════════ -->
+<section class="section" id="tier3000">
+  <div class="section-header">
+    <div class="section-label">Budget Tier 1</div>
+    <div class="price">¥3,000</div>
+    <h2>人均预算 · 经济舒适</h2>
+    <p>高铁直达 · 短途轻松 · 路况极佳 · 新手零压力</p>
+  </div>
+
+  <div class="cards">
+
+    <!-- Card 1: 千岛湖+桐庐 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1667749391793-e7d15e8ccb47?w=800&q=80'), linear-gradient(135deg, #4a90b8, #2d6a8f);">
+        <span class="card-badge">⭐ 最安全</span>
+        <span class="card-rank">1</span>
+      </div>
+      <div class="card-body">
+        <h3>千岛湖 + 桐庐</h3>
+        <p class="subtitle">环湖公路 · 富春山水 · 高铁直达</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 路况极佳</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤1.5h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 24-32°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈1,700 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈2,100 <span>元</span></div>
+          <div class="detail-line">高铁杭州⇄千岛湖120 / 合肥⇄千岛湖500（12306二等座） + 租车200 + 油费150 + 住宿400 + 餐饮500 + 门票300</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>高铁到千岛湖站 → 站内租车 → 淳杨线环湖（最美公路）→ 天屿山日落</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>中心湖区游船 → 沿白小线驱车建德 → 新安江畔 → 住梅城古镇</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>建德 → 桐庐（1h）→ 富春江小三峡 → 瑶琳仙境 → 深澳古村</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>大奇山森林公园 → 还车 → 高铁返回</div></div>
+            <div class="xhs-ref">📕 小红书：「桐庐慢游三天两夜」713赞 ·「江浙沪走进富春山水间的桐庐」2,516赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: 安吉+莫干山 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1586061968253-7bf5724aab7b?w=800&q=80'), linear-gradient(135deg, #5a8a4a, #3d6b30);">
+        <span class="card-badge">🎋 竹海秘境</span>
+        <span class="card-rank">2</span>
+      </div>
+      <div class="card-body">
+        <h3>安吉 + 莫干山</h3>
+        <p class="subtitle">竹海茶山 · 莫干山居 · 杭州后花园</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 路况好</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤1h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 25-33°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈1,200 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈1,600 <span>元</span></div>
+          <div class="detail-line">杭州直接自驾0路费（1h即达）/ 合肥高铁⇄安吉300（12306） + 租车200 + 油费120 + 民宿500 + 餐饮500 + 门票350</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>杭州/德清租车 → 安吉（1h）→ 中国大竹海 → 余村 → 住竹海民宿</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>云上草原 → 驱车莫干山（1h）→ 庾村民国风情街 → 住莫干山</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>莫干山风景区（景区巴士上山）→ Discovery探索基地 → 义远农场</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>下渚湖湿地 → 德清还车 → 高铁返回</div></div>
+            <div class="xhs-ref">📕 小红书：「浙江小新疆安吉两天一夜」13,000赞 ·「合肥出发48小时莫干山」1,015赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: 无锡太湖+苏州 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://plus.unsplash.com/premium_photo-1694475495121-cf6b8e57f219?w=800&q=80'), linear-gradient(135deg, #7ba4b8, #4a7a8f);">
+        <span class="card-badge">🌊 湖光山色</span>
+        <span class="card-rank">3</span>
+      </div>
+      <div class="card-body">
+        <h3>无锡太湖 + 苏州西山</h3>
+        <p class="subtitle">环太湖公路 · 西山岛 · 江南园林</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 路况极佳</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤3h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 25-33°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈2,100 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈2,100 <span>元</span></div>
+          <div class="detail-line">高铁杭州⇄无锡400 / 合肥⇄无锡400（12306） + 租车200 + 油费150 + 住宿450 + 餐饮500 + 门票300</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>高铁到无锡 → 租车 → 鼋头渚 → 太湖仙岛 → 蠡湖之光日落</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>十八湾公路环湖 → 拈花湾 → 灵山大佛 → 住马山半岛</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>驱车苏州西山岛（跨太湖大桥，2h）→ 林屋洞 → 明月湾日落 → 住西山</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>西山缥缈峰 → 环岛公路 → 无锡还车 → 高铁返回</div></div>
+            <div class="xhs-ref">📕 小红书：「两天一夜环太湖自驾贴湖路线」1,165赞 ·「太湖无锡段自驾攻略」349赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ 5000元档 ═══════════════ -->
+<section class="section" id="tier5000" style="background:#fff;">
+  <div class="section-header">
+    <div class="section-label">Budget Tier 2</div>
+    <div class="price">¥5,000</div>
+    <h2>人均预算 · 品质体验</h2>
+    <p>飞机出行 · 草原海风 · 视野开阔 · 新手从容</p>
+  </div>
+
+  <div class="cards">
+
+    <!-- Card 4: 赤峰乌兰布统 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1547981593-80556e25cd4b?w=800&q=80'), linear-gradient(135deg, #8b9d63, #5a7344);">
+        <span class="card-badge">🏇 新手友好标杆</span>
+        <span class="card-rank">1</span>
+      </div>
+      <div class="card-body">
+        <h3>赤峰 · 乌兰布统草原</h3>
+        <p class="subtitle">草原公路一马平川 · 小红书标注新手友好</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 草原公路</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤3h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 15-28°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈3,900 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈3,900 <span>元</span></div>
+          <div class="detail-line">机票杭州⇄赤峰≈2,000（单程1,000以内） + SUV 400 + 油费250 + 住宿550 + 餐饮骑马900</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>飞赤峰 → 机场租SUV → 驱车乌兰布统（3h草原公路）→ 影视基地日落</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>公主湖 → 五彩山 → 蛤蟆坝 → 欧式草原风光区 → 骑马体验 → 草原野餐</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>将军泡子 → 西拉木伦河谷 → 返回赤峰（3h）→ 赤峰博物馆</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>红山国家森林公园 → 飞回</div></div>
+            <div class="xhs-ref">📕 小红书：「自驾新手友好：赤峰-乌兰布统四天三晚」833赞 ·「女生独自自驾呼伦贝尔」329赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: 霞浦+平潭 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://plus.unsplash.com/premium_photo-1770696028662-1e75a4e6c9f0?w=800&q=80'), linear-gradient(135deg, #c4956a, #a07050);">
+        <span class="card-badge">📸 绝美滩涂</span>
+        <span class="card-rank">2</span>
+      </div>
+      <div class="card-body">
+        <h3>霞浦 + 平潭</h3>
+        <p class="subtitle">福建沿海 · 滩涂光影 · 最美环岛路</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 沿海公路</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤3h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 26-32°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈2,100 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈2,200 <span>元</span></div>
+          <div class="detail-line">高铁杭州⇄福州600 / 合肥⇄福州720（12306单程300/360） + 租车250 + 油费250 + 住宿500 + 餐饮500 + 门票200</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>高铁到福州 → 租车 → 驱车霞浦（2h）→ 东壁日落 → 小皓海滩</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>北岐滩涂日出 → 杨家溪 → 沙江S湾 → 驱车平潭（2.5h）→ 住平潭</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>平潭环岛路（最美沿海公路）→ 长江澳风车田 → 北港村 → 坛南湾</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>猴研岛（68海里）→ 福州还车 → 高铁返回</div></div>
+            <div class="xhs-ref">📕 小红书：「霞浦两天一夜自驾邂逅绝美滩涂」2,135赞 ·「杭州自驾福建4日游」52赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: 舟山群岛 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1683799909379-49eca8d6b171?w=800&q=80'), linear-gradient(135deg, #5b8fa8, #3a6078);">
+        <span class="card-badge">🏝️ 海岛风情</span>
+        <span class="card-rank">3</span>
+      </div>
+      <div class="card-body">
+        <h3>舟山群岛</h3>
+        <p class="subtitle">跨海大桥 · 朱家尖 · 普陀山 · 海鲜盛宴</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 跨海大桥</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤2h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 22-28°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈1,900 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈2,500 <span>元</span></div>
+          <div class="detail-line">杭州直接自驾（2h即达，0高铁）/ 合肥高铁⇄宁波600 + 租车250 + 油费过海大桥300 + 海景住宿600 + 餐饮船票1,000</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>高铁到宁波 → 租车 → 跨海大桥到舟山（1.5h）→ 朱家尖南沙沙滩</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>蜈蚣峙码头 → 船到普陀山 → 南海观音 → 法雨寺 → 返回朱家尖</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>大青山国家公园（自驾环山看海）→ 乌石塘 → 沈家门渔港夜排档</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>东极岛一日游（船程2h）或 白山景区 → 宁波还车 → 高铁返回</div></div>
+            <div class="xhs-ref">📕 小红书：「舟山东极岛和朱家尖详细分享」4,957赞 ·「比起东极岛更爱自驾直达的舟山小垦丁」74赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ 6000元档 ═══════════════ -->
+<section class="section" id="tier6000">
+  <div class="section-header">
+    <div class="section-label">Budget Tier 3</div>
+    <div class="price">¥6,000</div>
+    <h2>人均预算 · 梦想之旅</h2>
+    <p>远行但不冒险 · 草原湖泊雪山下 · 此生必驾</p>
+  </div>
+
+  <div class="cards">
+
+    <!-- Card 7: 呼伦贝尔 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1755789450537-6e1838cb3558?w=800&q=80'), linear-gradient(135deg, #7a9a5a, #4a7030);">
+        <span class="card-badge">🏆 终极推荐</span>
+        <span class="card-rank">1</span>
+      </div>
+      <div class="card-body">
+        <h3>呼伦贝尔大草原</h3>
+        <p class="subtitle">草原公路一马平川 · 6月最美季节 · 此生必驾</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 草原公路</span>
+          <span class="meta-item"><span class="dot dot-green"></span> 日驾≤3h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 15-28°C</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈4,500 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈4,500 <span>元</span></div>
+          <div class="detail-line">机票杭州⇄海拉尔≈2,000（单程1,000左右） + SUV 400 + 油费300 + 住宿含蒙古包800 + 餐饮骑马1,000</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>飞海拉尔 → 机场租SUV → 莫日格勒河（40km草原公路）→ 额尔古纳湿地 → 全天驾驶约120km</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>白桦林 → 恩和俄罗斯民族乡 → 室韦边境小镇 → 全天约160km</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>卡线（最美边境公路沿额尔古纳河）→ 黑山头骑马看日落 → 全天约180km</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>黑山头 → 海拉尔（180km）→ 飞回</div></div>
+            <div class="xhs-ref">📕 小红书：「呼伦贝尔自驾费用行程总结」629赞 ·「两人六天五晚呼伦贝尔自驾」678赞 ·「呼伦贝尔旅行第一天就这么美」9,480赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8: 青甘小环线 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1693285565018-34d22f87e4c0?w=800&q=80'), linear-gradient(135deg, #6b90b0, #3d6080);">
+        <span class="card-badge">🏔️ 天空之镜</span>
+        <span class="card-rank">2</span>
+      </div>
+      <div class="card-body">
+        <h3>青甘小环线</h3>
+        <p class="subtitle">青海湖 · 茶卡盐湖 · 祁连草原 · 门源花海</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 新手友好</span>
+          <span class="meta-item"><span class="dot dot-orange"></span> 日驾≤3.5h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 10-25°C</span>
+          <span class="meta-item"><span class="dot dot-red"></span> 海拔3200m</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈4,300 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈4,300 <span>元</span></div>
+          <div class="detail-line">机票杭州⇄西宁≈2,000（单程1,000左右） + SUV 500 + 油费300 + 住宿600 + 餐饮500 + 门票350</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>飞西宁 → 租SUV → 青海湖（2h高速）→ 环湖东线 → 二郎剑 → 黑马河日落</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>黑马河日出 → 茶卡盐湖天空之镜 → 返回青海湖 → 住刚察（全天约180km）</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>刚察 → 祁连草原 → 卓尔山（东方小瑞士）→ 住祁连（全天约160km）</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>门源油菜花海（7月初盛开！）→ 回西宁（200km高速）→ 飞回</div></div>
+            <div class="xhs-ref">📕 小红书：「新手司机友好-青甘小环线自驾总结」104赞 ·「三天打卡青海湖小环线」609赞 ·「环青海湖小小环线」509赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 9: 丽江+大理 -->
+    <div class="card">
+      <div class="card-img" style="background-image:url('https://plus.unsplash.com/premium_photo-1661936340711-8b2300d5f063?w=800&q=80'), linear-gradient(135deg, #8b7a9a, #5a4a70);">
+        <span class="card-badge">🏔️ 雪山古城</span>
+        <span class="card-rank">3</span>
+      </div>
+      <div class="card-body">
+        <h3>丽江 + 大理</h3>
+        <p class="subtitle">大丽高速平坦宽阔 · 洱海环湖 · 古城慢时光</p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="dot dot-green"></span> 高速平坦</span>
+          <span class="meta-item"><span class="dot dot-orange"></span> 日驾≤4h</span>
+          <span class="meta-item"><span class="dot dot-blue"></span> 15-26°C</span>
+          <span class="meta-item"><span class="dot dot-orange"></span> 偶有阵雨</span>
+        </div>
+        <div class="card-cost">
+          <div class="total"><span style="font-size:0.75rem;font-weight:400">杭州</span> ≈4,100 <span>元</span> &nbsp; <span style="font-size:0.75rem;font-weight:400">合肥</span> ≈4,100 <span>元</span></div>
+          <div class="detail-line">机票杭州⇄丽江≈2,000（单程1,000以内） + 租车300 + 油费200 + 住宿700 + 餐饮500 + 门票450</div>
+        </div>
+        <div class="card-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg> 展开详细行程</div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            <div class="day-item"><div class="day-num">D1</div><div>飞丽江 → 租车 → 丽江古城 → 束河古镇（玉龙雪山景区坐巴士，不自己开上山）</div></div>
+            <div class="day-item"><div class="day-num">D2</div><div>大丽高速驱车大理（2h）→ 环洱海（双廊、喜洲、理想邦）→ 住大理</div></div>
+            <div class="day-item"><div class="day-num">D3</div><div>大理 → 沙溪古镇 → 下午回丽江（大丽高速）→ 白沙古镇看雪山</div></div>
+            <div class="day-item"><div class="day-num">D4</div><div>玉湖村（雪山脚下）→ 飞回</div></div>
+            <div class="xhs-ref">📕 小红书：「丽江4日游攻略」442赞 ·「丽江大理四天三晚自驾」88赞 ·「丽江往返香格里拉自驾」114赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ COMPARISON TABLE ═══════════════ -->
+<section class="compare">
+  <div class="compare-inner">
+    <h2>九大目的地 · 一表对比</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>目的地</th>
+          <th>预算</th>
+          <th>日驾驶</th>
+          <th>路况</th>
+          <th>天气</th>
+          <th>推荐</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>千岛湖+桐庐</strong></td>
+          <td><span class="tier-badge tier-low">杭¥1,700 / 合¥2,100</span></td>
+          <td>≤1.5h</td>
+          <td><span class="star">★★★</span></td>
+          <td>24-32°C</td>
+          <td>⭐最安全</td>
+        </tr>
+        <tr>
+          <td><strong>安吉+莫干山</strong></td>
+          <td><span class="tier-badge tier-low">杭¥1,200 / 合¥1,600</span></td>
+          <td>≤1h</td>
+          <td><span class="star">★★★</span></td>
+          <td>25-33°C</td>
+          <td>🎋竹海</td>
+        </tr>
+        <tr>
+          <td><strong>无锡太湖+苏州</strong></td>
+          <td><span class="tier-badge tier-low">杭¥2,100 / 合¥2,100</span></td>
+          <td>≤3h</td>
+          <td><span class="star">★★★</span></td>
+          <td>25-33°C</td>
+          <td>🌊湖光</td>
+        </tr>
+        <tr style="background:#faf9f6;">
+          <td><strong>乌兰布统草原</strong></td>
+          <td><span class="tier-badge tier-mid">杭¥3,900 / 合¥3,900</span></td>
+          <td>≤3h</td>
+          <td><span class="star">★★★</span></td>
+          <td>15-28°C</td>
+          <td>🏇首选</td>
+        </tr>
+        <tr style="background:#faf9f6;">
+          <td><strong>霞浦+平潭</strong></td>
+          <td><span class="tier-badge tier-mid">杭¥2,100 / 合¥2,200</span></td>
+          <td>≤3h</td>
+          <td><span class="star">★★★</span></td>
+          <td>26-32°C</td>
+          <td>📸出片</td>
+        </tr>
+        <tr style="background:#faf9f6;">
+          <td><strong>舟山群岛</strong></td>
+          <td><span class="tier-badge tier-mid">杭¥1,900 / 合¥2,500</span></td>
+          <td>≤2h</td>
+          <td><span class="star">★★☆</span></td>
+          <td>22-28°C</td>
+          <td>🏝️海岛</td>
+        </tr>
+        <tr>
+          <td><strong>呼伦贝尔草原</strong></td>
+          <td><span class="tier-badge tier-high">杭¥4,500 / 合¥4,500</span></td>
+          <td>≤3h</td>
+          <td><span class="star">★★★</span></td>
+          <td>15-28°C</td>
+          <td>🏆终极</td>
+        </tr>
+        <tr>
+          <td><strong>青甘小环线</strong></td>
+          <td><span class="tier-badge tier-high">杭¥4,300 / 合¥4,300</span></td>
+          <td>≤3.5h</td>
+          <td><span class="star">★★☆</span></td>
+          <td>10-25°C</td>
+          <td>🏔️震撼</td>
+        </tr>
+        <tr>
+          <td><strong>丽江+大理</strong></td>
+          <td><span class="tier-badge tier-high">杭¥4,100 / 合¥4,100</span></td>
+          <td>≤4h</td>
+          <td><span class="star">★★☆</span></td>
+          <td>15-26°C</td>
+          <td>🏔️经典</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════ SAFETY ═══════════════ -->
+<section class="safety">
+  <div class="safety-inner">
+    <h2>新手驾驶安全清单</h2>
+    <div class="safety-grid">
+      <div class="safety-card">
+        <div class="s-icon">⏱️</div>
+        <h4>每日驾驶上限 4 小时</h4>
+        <p>实际控制在 3 小时左右最舒适。每驾驶 1.5 小时必须休息 15 分钟。</p>
+      </div>
+      <div class="safety-card">
+        <div class="s-icon">🌅</div>
+        <h4>绝不开夜车</h4>
+        <p>下午 5 点前到达当天住宿地。草原和山区天黑后能见度极低，务必提前收车。</p>
+      </div>
+      <div class="safety-card">
+        <div class="s-icon">🚙</div>
+        <h4>租车必选自动挡</h4>
+        <p>新手别碰手动挡。推荐神州/一嗨等大平台，机场取还最方便。务必加购全额险。</p>
+      </div>
+      <div class="safety-card">
+        <div class="s-icon">🗺️</div>
+        <h4>提前下载离线地图</h4>
+        <p>草原、山区、海边信号不稳定。高德/百度地图提前下载目的地离线包。</p>
+      </div>
+      <div class="safety-card">
+        <div class="s-icon">👥</div>
+        <h4>副驾 = 领航员</h4>
+        <p>负责导航、查路况、递水、拍照。不要让司机分心操作手机或其他设备。</p>
+      </div>
+      <div class="safety-card">
+        <div class="s-icon">🌦️</div>
+        <h4>出发前查天气</h4>
+        <p>提前 3 天关注目的地天气。如遇连续大雨预警，及时更换目的地，安全第一。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <p>综合来源：小红书 90+ 条旅行攻略笔记 · 高德/百度地图路况评估 · 航班高铁公开数据</p>
+  <p style="margin-top:0.5rem;">攻略生成于 2026 年 5 月 · 价格数据仅供参考 · 出行前请核实最新信息</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Route data for each destination ──
+const routes = {
+  'qiandaohu': {
+    points: [[29.61,119.04],[29.55,118.98],[29.54,119.50],[29.79,119.69],[29.79,119.67]],
+    labels: ['千岛湖站','淳杨线环湖','建德梅城','桐庐富春江','大奇山'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#1976d2','#e65100'],
+    center: [29.65, 119.35], zoom: 10
+  },
+  'anji': {
+    points: [[30.63,119.68],[30.60,119.62],[30.60,119.88],[30.52,120.02]],
+    labels: ['安吉','大竹海','莫干山','下渚湖'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#e65100'],
+    center: [30.59, 119.80], zoom: 12
+  },
+  'wuxi': {
+    points: [[31.57,120.30],[31.52,120.22],[31.43,120.10],[31.10,120.28]],
+    labels: ['无锡站','鼋头渚','灵山大佛','苏州西山'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#e65100'],
+    center: [31.35, 120.20], zoom: 11
+  },
+  'wulanbutong': {
+    points: [[42.26,118.89],[42.55,117.23],[42.58,117.18],[42.55,117.10]],
+    labels: ['赤峰机场','乌兰布统','公主湖','蛤蟆坝'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#e65100'],
+    center: [42.40, 117.90], zoom: 11
+  },
+  'xiapu': {
+    points: [[26.07,119.30],[26.88,120.00],[26.68,119.95],[25.50,119.79],[25.55,119.82]],
+    labels: ['福州','霞浦东壁','杨家溪','平潭岛','坛南湾'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#1976d2','#e65100'],
+    center: [26.30, 119.60], zoom: 10
+  },
+  'zhoushan': {
+    points: [[29.87,121.55],[29.91,122.39],[30.00,122.39],[29.93,122.42]],
+    labels: ['宁波','朱家尖','普陀山','大青山'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#e65100'],
+    center: [29.97, 121.95], zoom: 12
+  },
+  'hulunbuir': {
+    points: [[49.21,119.75],[49.35,119.62],[50.24,120.18],[50.82,119.92],[51.33,119.89],[50.13,119.58]],
+    labels: ['海拉尔','莫日格勒河','额尔古纳','恩和','室韦','黑山头'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#1976d2','#1976d2','#e65100'],
+    center: [50.30, 119.85], zoom: 10
+  },
+  'qinggan': {
+    points: [[36.62,101.78],[36.91,100.33],[36.78,99.08],[37.33,100.13],[38.18,100.25],[37.38,101.62]],
+    labels: ['西宁','青海湖','茶卡盐湖','刚察','祁连卓尔山','门源花海'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#1976d2','#1976d2','#e65100'],
+    center: [37.50, 100.40], zoom: 9
+  },
+  'lijiang': {
+    points: [[26.86,100.23],[25.61,100.27],[25.92,100.13],[26.31,99.85],[26.86,100.23]],
+    labels: ['丽江古城','大理古城','双廊','沙溪古镇','丽江'],
+    colors: ['#2e7d32','#1976d2','#1976d2','#1976d2','#e65100'],
+    center: [26.15, 100.05], zoom: 11
+  }
+};
+
+const tileUrl = 'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}';
+const mapsInited = {};
+
+function initCardMap(card, routeKey) {
+  const data = routes[routeKey];
+  if (!data) return;
+
+  const container = document.getElementById('map-' + routeKey);
+  if (!container) {
+    const div = document.createElement('div');
+    div.className = 'card-map';
+    div.id = 'map-' + routeKey;
+    const detailInner = card.querySelector('.card-detail-inner');
+    if (!detailInner) return;
+    detailInner.appendChild(div);
+
+    setTimeout(() => {
+      const map = L.map(div.id, {
+        center: data.center, zoom: data.zoom,
+        zoomControl: true, attributionControl: false, maxZoom: 18
+      });
+      L.tileLayer(tileUrl, {
+        subdomains: ['01','02','03','04'], maxZoom: 18, maxNativeZoom: 17
+      }).addTo(map);
+
+      data.points.forEach((pt, i) => {
+        L.circleMarker(pt, {
+          radius: 7, fillColor: data.colors[i], color: '#fff', weight: 2, fillOpacity: 0.9
+        }).bindPopup('<b>' + data.labels[i] + '</b>').addTo(map);
+      });
+      L.polyline(data.points, {
+        color: '#1976d2', weight: 3, opacity: 0.7, dashArray: '8 4'
+      }).addTo(map);
+
+      mapsInited[routeKey] = map;
+      setTimeout(() => map.invalidateSize(), 100);
+    }, 700);
+  } else if (mapsInited[routeKey] && typeof mapsInited[routeKey] === 'object') {
+    setTimeout(() => mapsInited[routeKey].invalidateSize(), 100);
+  }
+}
+
+// ── Card expand with map init ──
+const routeKeys = ['qiandaohu','anji','wuxi','wulanbutong','xiapu','zhoushan','hulunbuir','qinggan','lijiang'];
+
+document.querySelectorAll('.card').forEach((card, idx) => {
+  const expandBtn = card.querySelector('.card-expand');
+  const routeKey = routeKeys[idx];
+
+  card.addEventListener('click', function(e) {
+    if (e.target.closest('a') || e.target.closest('.leaflet-container')) return;
+    this.classList.toggle('expanded');
+    if (this.classList.contains('expanded')) {
+      initCardMap(this, routeKey);
+    }
+  });
+
+  if (expandBtn) {
+    expandBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      card.classList.toggle('expanded');
+      if (card.classList.contains('expanded')) {
+        setTimeout(() => initCardMap(card, routeKey), 300);
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>

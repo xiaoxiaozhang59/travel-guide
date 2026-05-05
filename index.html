@@ -449,28 +449,18 @@ const CONTENT = {
           ],
           xhs: '📕 「自驾新手友好：赤峰-乌兰布统四天三晚」833赞 ·「女生独自自驾呼伦贝尔」329赞',
           map: { center:[42.40,117.90], zoom:11, points:[[42.26,118.89],[42.55,117.23],[42.58,117.18],[42.55,117.10]], labels:['赤峰机场','乌兰布统','公主湖','蛤蟆坝'], colors:['#2e7d32','#1976d2','#1976d2','#e65100'] }
-        }
-      ]
-    },
-    {
-      id: 'tier-6000',
-      label: 'Budget Tier 4',
-      price: '¥6,000',
-      title: '人均预算 · 梦想之旅',
-      subtitle: '远行但不冒险 · 草原湖泊雪山下 · 此生必驾',
-      bgWhite: true,
-      destinations: [
+        },
         {
           id: 'hulunbuir',
           name: '呼伦贝尔大草原',
-          subtitle: '草原公路一马平川 · 6月最美季节 · 此生必驾',
+          subtitle: '草原公路一马平川 · 6月最美季节 · G331边境公路',
           badge: '🏆 终极推荐',
-          rank: 1,
+          rank: 2,
           image: 'https://images.unsplash.com/photo-1755789450537-6e1838cb3558?w=800&q=80',
           imageBg: 'linear-gradient(135deg, #7a9a5a, #4a7030)',
           meta: [
             { dot:'dot-green', text:'草原公路' },
-            { dot:'dot-green', text:'日驾≤3h' },
+            { dot:'dot-green', text:'日驾≤4h' },
             { dot:'dot-blue', text:'15-28°C' }
           ],
           hzCost: 3600,
@@ -484,13 +474,23 @@ const CONTENT = {
           ],
           xhs: '',
           map: { center:[50.30,119.85], zoom:10, points:[[49.21,119.75],[49.35,119.62],[50.24,120.18],[50.82,119.92],[51.33,119.89],[50.13,119.58]], labels:['海拉尔','莫日格勒河','额尔古纳','恩和','室韦','黑山头'], colors:['#2e7d32','#1976d2','#1976d2','#1976d2','#1976d2','#e65100'] }
-        },
+        }
+      ]
+    },
+    {
+      id: 'tier-6000',
+      label: 'Budget Tier 4',
+      price: '¥6,000',
+      title: '人均预算 · 梦想之旅',
+      subtitle: '远行但不冒险 · 草原湖泊雪山下 · 此生必驾',
+      bgWhite: true,
+      destinations: [
         {
           id: 'qinggan',
           name: '青甘小环线',
           subtitle: '青海湖 · 茶卡盐湖 · 祁连草原 · 门源花海',
           badge: '🏔️ 天空之镜',
-          rank: 2,
+          rank: 1,
           image: 'https://images.unsplash.com/photo-1693285565018-34d22f87e4c0?w=800&q=80',
           imageBg: 'linear-gradient(135deg, #6b90b0, #3d6080)',
           meta: [
@@ -516,7 +516,7 @@ const CONTENT = {
           name: '丽江 + 大理',
           subtitle: '大丽高速平坦宽阔 · 洱海环湖 · 古城慢时光',
           badge: '🏔️ 雪山古城',
-          rank: 3,
+          rank: 2,
           image: 'https://plus.unsplash.com/premium_photo-1661936340711-8b2300d5f063?w=800&q=80',
           imageBg: 'linear-gradient(135deg, #8b7a9a, #5a4a70)',
           meta: [
@@ -553,7 +553,7 @@ const CONTENT = {
       { name:'霞浦+平潭', tier:'杭¥2,100 / 合¥2,200', tierClass:'tier-mid', drive:'≤3h', road:'★★★', weather:'26-32°C', rec:'📸出片', bg:true },
       { name:'舟山群岛', tier:'杭¥1,900 / 合¥2,500', tierClass:'tier-mid', drive:'≤2h', road:'★★☆', weather:'22-28°C', rec:'🏝️海岛', bg:true },
       { name:'乌兰布统草原', tier:'杭¥3,900 / 合¥3,900', tierClass:'tier-mid', drive:'≤3h', road:'★★★', weather:'15-28°C', rec:'🏇首选', bg:false },
-      { name:'呼伦贝尔草原', tier:'杭¥3,600 / 合¥4,500', tierClass:'tier-high', drive:'≤4h', road:'★★★', weather:'15-28°C', rec:'🏆终极', bg:false },
+      { name:'呼伦贝尔草原', tier:'杭¥3,600 / 合¥4,500', tierClass:'tier-mid', drive:'≤4h', road:'★★★', weather:'15-28°C', rec:'🏆终极', bg:true },
       { name:'青甘小环线', tier:'杭¥4,300 / 合¥4,300', tierClass:'tier-high', drive:'≤3.5h', road:'★★☆', weather:'10-25°C', rec:'🏔️震撼', bg:false },
       { name:'丽江+大理', tier:'杭¥4,100 / 合¥4,100', tierClass:'tier-high', drive:'≤4h', road:'★★☆', weather:'15-26°C', rec:'🏔️经典', bg:false }
     ]
